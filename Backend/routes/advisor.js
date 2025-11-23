@@ -1,92 +1,148 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const cloudinary = require("../cloudinary");
+
+// Models
 const AdvisorProfile = require("../models/AdvisorProfile");
-const InternshipApplication = require("../models/InternshipApplication"); // if you added it
-const auth = require("../middleware/auth");
-const upload = require("../middleware/upload"); // multer
+const InternshipApplication = require("../models/InternshipApplication");
 
-// ⭐ CREATE or UPDATE ADVISOR PROFILE (Controller inside route)
-router.post("/profile", auth, upload.single("profileImage"), async (req, res) => {
+// Multer memory storage (same as student example)
+const upload = multer({ storage: multer.memoryStorage() });
+
+/* ------------------------------------------
+   CREATE OR UPDATE ADVISOR PROFILE
+---------------------------------------------*/
+router.post("/profile", upload.single("profileImage"), async (req, res) => {
   try {
-    const advisorId = req.user._id;
+    const advisorId = req.body.advisorId;
 
-    const profileData = {
-      advisorId,
-      fullName: req.body.fullName,
-      email: req.body.email,
-      phone: req.body.phone,
-      department: req.body.department,
-      designation: req.body.designation,
-      officeLocation: req.body.officeLocation,
-      profileImage: req.file ? req.file.filename : undefined,
-    };
+    if (!advisorId)
+      return res.json({ success: false, message: "advisorId missing" });
+
+    let imageUrl;
+
+    // If advisor uploaded a profile image → upload to Cloudinary
+    if (req.file) {
+      const fileBase64 = req.file.buffer.toString("base64");
+
+      const uploadResult = await cloudinary.uploader.upload(
+        `data:${req.file.mimetype};base64,${fileBase64}`,
+        {
+          folder: "advisor_profiles",
+          resource_type: "image",
+        }
+      );
+
+      imageUrl = uploadResult.secure_url;
+    }
 
     const updatedProfile = await AdvisorProfile.findOneAndUpdate(
       { advisorId },
-      profileData,
+      {
+        advisorId,
+        fullName: req.body.fullName,
+        email: req.body.email,
+        phone: req.body.phone,
+        department: req.body.department,
+        designation: req.body.designation,
+        officeLocation: req.body.officeLocation,
+        profileImage: imageUrl,
+      },
       { new: true, upsert: true }
     );
 
-    return res.json({ success: true, profile: updatedProfile });
+    res.json({ success: true, profile: updatedProfile });
+
   } catch (err) {
-    console.log(err);
-    res.status(500).json({ success: false, message: "Error saving profile" });
+    console.error("Advisor Save Error:", err);
+    res.json({ success: false, message: "Error saving profile" });
   }
 });
 
-// ⭐ GET ADVISOR PROFILE
-router.get("/profile", auth, async (req, res) => {
+/* ------------------------------------------
+   GET ADVISOR PROFILE
+---------------------------------------------*/
+router.post("/getProfile", async (req, res) => {
   try {
-    const profile = await AdvisorProfile.findOne({ advisorId: req.user._id });
+    const advisorId = req.body.advisorId;
+
+    if (!advisorId)
+      return res.json({ success: false, message: "advisorId missing" });
+
+    const profile = await AdvisorProfile.findOne({ advisorId });
+
     res.json({ success: true, profile });
+
   } catch (err) {
-    res.status(500).json({ success: false, message: "Error loading profile" });
+    console.error("Advisor Profile Load Error:", err);
+    res.json({ success: false, message: "Error loading profile" });
   }
 });
 
-// ⭐ GET INTERNSHIP APPLICATIONS FOR THIS ADVISOR
-router.get("/applications", auth, async (req, res) => {
+/* ------------------------------------------
+   GET INTERNSHIP APPLICATIONS FOR THIS ADVISOR
+---------------------------------------------*/
+router.post("/applications", async (req, res) => {
   try {
-    const apps = await InternshipApplication.find({ advisorId: req.user._id })
+    const advisorId = req.body.advisorId;
+
+    if (!advisorId)
+      return res.json({ success: false, message: "advisorId missing" });
+
+    const apps = await InternshipApplication.find({ advisorId })
       .populate("studentId")
       .populate("companyId")
       .populate("internshipId");
 
     res.json({ success: true, applications: apps });
+
   } catch (err) {
-    res.status(500).json({ success: false, message: "Error loading applications" });
+    console.error("Advisor Applications Error:", err);
+    res.json({ success: false, message: "Error loading applications" });
   }
 });
 
-// ⭐ ADVISOR APPROVE APPLICATION
-router.post("/applications/:id/approve", auth, async (req, res) => {
-    try {
-      const updated = await InternshipApplication.findByIdAndUpdate(
-        req.params.id,
-        { status: "approved", advisorMessage: req.body.message },
-        { new: true }
-      );
-  
-      res.json({ success: true, application: updated });
-    } catch (err) {
-      res.status(500).json({ success: false });
-    }
-  });
-  
-  // ⭐ ADVISOR REJECT APPLICATION
-  router.post("/applications/:id/reject", auth, async (req, res) => {
-    try {
-      const updated = await InternshipApplication.findByIdAndUpdate(
-        req.params.id,
-        { status: "rejected", advisorMessage: req.body.message },
-        { new: true }
-      );
-  
-      res.json({ success: true, application: updated });
-    } catch (err) {
-      res.status(500).json({ success: false });
-    }
-  });
-  
+/* ------------------------------------------
+   APPROVE APPLICATION
+---------------------------------------------*/
+router.post("/applications/approve", async (req, res) => {
+  try {
+    const { applicationId, message } = req.body;
+
+    const updated = await InternshipApplication.findByIdAndUpdate(
+      applicationId,
+      { status: "approved", advisorMessage: message },
+      { new: true }
+    );
+
+    res.json({ success: true, application: updated });
+
+  } catch (err) {
+    console.error("Approve Error:", err);
+    res.json({ success: false });
+  }
+});
+
+/* ------------------------------------------
+   REJECT APPLICATION
+---------------------------------------------*/
+router.post("/applications/reject", async (req, res) => {
+  try {
+    const { applicationId, message } = req.body;
+
+    const updated = await InternshipApplication.findByIdAndUpdate(
+      applicationId,
+      { status: "rejected", advisorMessage: message },
+      { new: true }
+    );
+
+    res.json({ success: true, application: updated });
+
+  } catch (err) {
+    console.error("Reject Error:", err);
+    res.json({ success: false });
+  }
+});
 
 module.exports = router;

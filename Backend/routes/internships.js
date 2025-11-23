@@ -1,31 +1,42 @@
 const express = require("express");
 const router = express.Router();
 const InternshipApplication = require("../models/InternshipApplication");
-const auth = require("../middleware/auth");
 
-router.post("/apply", auth, async (req, res) => {
+/* ------------------------------------------
+   STUDENT APPLIES FOR INTERNSHIP
+---------------------------------------------*/
+router.post("/apply", async (req, res) => {
   try {
-    const { internshipId, companyId, studentMessage } = req.body;
+    const { studentId, internshipId, companyId, studentMessage, advisorId } = req.body;
 
-    const student = req.user;
-
-    // if student has no advisor assigned, default null
-    const advisorId = student.assignedAdvisor || null;
+    if (!studentId || !companyId || !internshipId) {
+      return res.json({
+        success: false,
+        message: "Missing required fields",
+      });
+    }
 
     const application = await InternshipApplication.create({
-      studentId: student._id,
+      studentId,
       internshipId,
       companyId,
-      advisorId,
-      studentMessage,
+      advisorId: advisorId || null,  // if no advisor, it becomes null
+      studentMessage: studentMessage || "",
+      status: "pending",
     });
 
-    res.json({ success: true, application });
+    res.json({
+      success: true,
+      message: "Application submitted successfully",
+      application,
+    });
+
   } catch (err) {
-    console.log(err);
-    res
-      .status(500)
-      .json({ success: false, message: "Error submitting application" });
+    console.error("Apply Error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error submitting application",
+    });
   }
 });
 
