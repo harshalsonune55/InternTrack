@@ -69,11 +69,11 @@ function App() {
           <ProtectedRoute><Apply /></ProtectedRoute>
         }/>
         <Route 
-  path="/upload"
+    path="/upload"
   element={
     <ProtectedRoute>
       <Upload />
-    </ProtectedRoute>
+    </ProtectedRoute> 
   }
 />
                         <Route path="/advisor" element={
