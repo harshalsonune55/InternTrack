@@ -171,5 +171,30 @@ router.get("/advisor/:advisorId/applications", async (req, res) => {
   }
 });
 
+/* ------------------------------------------
+   ADVISOR — VIEW ALL APPLICATIONS
+---------------------------------------------*/
+router.get("/applications/all", async (req, res) => {
+  try {
+    const apps = await InternshipApplication.find()
+      .populate("studentId", "name email")
+      .populate("companyId", "name")
+      .populate("internshipId", "title");
+
+    res.json({
+      success: true,
+      applications: apps,
+    });
+
+  } catch (err) {
+    console.error("Advisor Fetch All Error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error while fetching applications",
+    });
+  }
+});
+
+
 
 module.exports = router;

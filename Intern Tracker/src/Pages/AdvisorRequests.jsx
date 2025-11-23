@@ -10,9 +10,7 @@ export default function AdvisorRequests() {
 
   // FETCH APPLICATIONS FOR THE ADVISOR
   useEffect(() => {
-    if (!user?._id) return;
-
-    fetch(`https://interntrack-server-sptb.onrender.com/applications/advisor/${user._id}/applications`)
+    fetch(`https://interntrack-server-sptb.onrender.com/advisor/applications/all`)
       .then((res) => res.json())
       .then((data) => {
         if (data.success) {
@@ -21,6 +19,7 @@ export default function AdvisorRequests() {
       })
       .catch((err) => console.error("Advisor Fetch Error:", err));
   }, []);
+  
 
   // Stats
   const stats = [
