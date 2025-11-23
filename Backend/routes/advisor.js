@@ -145,4 +145,31 @@ router.post("/applications/reject", async (req, res) => {
   }
 });
 
+/* -----------------------------------------------------------
+   GET ALL APPLICATIONS ASSIGNED TO AN ADVISOR
+------------------------------------------------------------*/
+router.get("/advisor/:advisorId/applications", async (req, res) => {
+  try {
+    const advisorId = req.params.advisorId;
+
+    const apps = await InternshipApplication.find({ advisorId })
+      .populate("studentId", "name email")
+      .populate("companyId", "name")
+      .populate("internshipId", "title description");
+
+    res.json({
+      success: true,
+      applications: apps,
+    });
+
+  } catch (err) {
+    console.error("Advisor Fetch Error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Server error fetching advisor applications",
+    });
+  }
+});
+
+
 module.exports = router;

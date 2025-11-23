@@ -45,9 +45,9 @@ export default function Sidebar() {
   // ⭐ ADVISOR MENU (NEW)
   const advisorNav = [
     { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/dashboard" },
-    { label: "Advisor Portal", icon: <GraduationCap size={18} />, path: "/advisor" },
+    { label: "Advisor", icon: <GraduationCap size={18} />, path: "/advisor" },
     { label: "All Students", icon: <Users size={18} />, path: "/students" },
-    { label: "Internships", icon: <Briefcase size={18} />, path: "/internships" },
+    { label: "Internships", icon: <Briefcase size={18} />, path: "/advisor/requests" },
     { label: "Notifications", icon: <Bell size={18} />, path: "/notifications" },
   ];
 
