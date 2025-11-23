@@ -6,11 +6,17 @@ export default function EmployerDashboard() {
   const user = JSON.parse(localStorage.getItem("user"));
   const [applications, setApplications] = useState([]);
 
-  // 👉 Fetch all applications for this employer
+  // 👉 Fetch all applications
   const loadApplications = async () => {
-    const res = await fetch("https://interntrack-server-sptb.onrender.com/internships/employer/" + user._id);
+    const res = await fetch(
+      "https://interntrack-server-sptb.onrender.com/internships/employer/" +
+        user._id
+    );
     const data = await res.json();
-    if (data.success) setApplications(data.applications);
+
+    if (data.success) {
+      setApplications(data.applications);
+    }
   };
 
   useEffect(() => {
@@ -19,24 +25,36 @@ export default function EmployerDashboard() {
 
   // 👉 Accept Internship
   const handleAccept = async (id) => {
-    await fetch("https://interntrack-server-sptb.onrender.com/advisor/applications/approve", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ applicationId: id, message: "Approved by employer" }),
-    });
+    await fetch(
+      "https://interntrack-server-sptb.onrender.com/employer/applications/approve",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          applicationId: id,
+          message: "Approved by employer",
+        }),
+      }
+    );
 
-    loadApplications(); // refresh
+    loadApplications(); // refresh UI
   };
 
   // 👉 Reject Internship
   const handleReject = async (id) => {
-    await fetch("https://your-backend-url.com/advisor/applications/reject", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ applicationId: id, message: "Rejected by employer" }),
-    });
+    await fetch(
+      "https://interntrack-server-sptb.onrender.com/employer/applications/reject",
+      {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          applicationId: id,
+          message: "Rejected by employer",
+        }),
+      }
+    );
 
-    loadApplications(); // refresh
+    loadApplications(); // refresh UI
   };
 
   return (
@@ -51,9 +69,21 @@ export default function EmployerDashboard() {
 
         {/* STATS BOXES */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-          <StatCard label="Pending Applications" value={applications.length} color="green" />
-          <StatCard label="Approved" value={applications.filter(a => a.status === 'approved').length} color="blue" />
-          <StatCard label="Rejected" value={applications.filter(a => a.status === 'rejected').length} color="red" />
+          <StatCard
+            label="Pending Applications"
+            value={applications.length}
+            color="green"
+          />
+          <StatCard
+            label="Approved"
+            value={applications.filter((a) => a.status === "approved").length}
+            color="blue"
+          />
+          <StatCard
+            label="Rejected"
+            value={applications.filter((a) => a.status === "rejected").length}
+            color="red"
+          />
         </div>
 
         {/* APPLICATION LIST */}
@@ -68,10 +98,25 @@ export default function EmployerDashboard() {
           ) : (
             <div className="space-y-4">
               {applications.map((app) => (
-                <div key={app._id} className="border p-4 rounded-lg bg-gray-50">
-                  <h4 className="font-semibold">{app.studentId?.name}</h4>
-                  <p className="text-sm text-gray-600">Student ID: {app.studentId?._id}</p>
-                  <p className="text-sm text-gray-600">Position: {app.internshipId?.title}</p>
+                <div
+                  key={app._id}
+                  className="border p-4 rounded-lg bg-gray-50 space-y-2"
+                >
+                  <h4 className="font-semibold">
+                    {app.studentId?.name || "Unknown Student"}
+                  </h4>
+
+                  <p className="text-sm text-gray-600">
+                    Student ID: {app.studentId?._id}
+                  </p>
+
+                  <p className="text-sm text-gray-600">
+                    Position: {app.internshipId?.title || "N/A"}
+                  </p>
+
+                  <p className="text-sm text-gray-600">
+                    Company: {app.companyId?.name || "N/A"}
+                  </p>
 
                   {/* ACTION BUTTONS */}
                   <div className="flex gap-4 mt-3">
@@ -90,7 +135,9 @@ export default function EmployerDashboard() {
                     </button>
                   </div>
 
-                  <p className="text-xs text-gray-500 mt-2">{new Date(app.appliedAt).toLocaleDateString()}</p>
+                  <p className="text-xs text-gray-500 mt-2">
+                    {new Date(app.appliedAt).toLocaleDateString()}
+                  </p>
                 </div>
               ))}
             </div>
@@ -114,7 +161,7 @@ function StatCard({ label, value, color }) {
   return (
     <div className={`p-6 rounded-xl shadow-sm bg-${color}-100 border`}>
       <p className="text-gray-500 text-sm">{label}</p>
-      <h2 className="text-3xl font-bold text-${color}-700 mt-1">{value}</h2>
+      <h2 className={`text-3xl font-bold text-${color}-700 mt-1`}>{value}</h2>
     </div>
   );
 }

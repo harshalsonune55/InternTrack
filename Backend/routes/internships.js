@@ -20,7 +20,7 @@ router.post("/apply", async (req, res) => {
       studentId,
       internshipId,
       companyId,
-      advisorId: advisorId || null,  // if no advisor, it becomes null
+      advisorId: advisorId || null,
       studentMessage: studentMessage || "",
       status: "pending",
     });
@@ -39,38 +39,50 @@ router.post("/apply", async (req, res) => {
     });
   }
 });
-router.get("/student/:studentId", async (req, res) => {
-    try {
-      const studentId = req.params.studentId;
-  
-      const apps = await InternshipApplication.find({ studentId });
-  
-      res.json({
-        success: true,
-        applications: apps,
-      });
-  
-    } catch (err) {
-      console.error("Fetch Applications Error:", err);
-      res.status(500).json({ success: false, message: "Server error" });
-    }
-  });
 
-  // 👉 FETCH ALL APPLICATIONS FOR EMPLOYER
+
+
+/* ------------------------------------------
+   FETCH STUDENT APPLICATIONS
+---------------------------------------------*/
+router.get("/student/:studentId", async (req, res) => {
+  try {
+    const studentId = req.params.studentId;
+
+    const apps = await InternshipApplication.find({ studentId })
+      .populate("companyId", "name")          // FIX
+      .populate("internshipId", "title")      // FIX
+      .populate("studentId", "name email");   // For display
+
+    res.json({
+      success: true,
+      applications: apps,
+    });
+
+  } catch (err) {
+    console.error("Fetch Applications Error:", err);
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+});
+
+
+
+/* ------------------------------------------
+   FETCH ALL APPLICATIONS FOR EMPLOYER
+---------------------------------------------*/
 router.get("/employer/:employerId", async (req, res) => {
-    try {
-      const apps = await InternshipApplication.find()
-        .populate("studentId")
-        .populate("internshipId")
-        .populate("companyId");
-  
-      res.json({ success: true, applications: apps });
-    } catch (err) {
-      console.error("Employer Fetch Error:", err);
-      res.status(500).json({ success: false });
-    }
-  });
-  
-  
+  try {
+    const apps = await InternshipApplication.find()
+      .populate("studentId", "name email")      // Show student info
+      .populate("companyId", "name")            // Show company name instead of ObjectId
+      .populate("internshipId", "title");       // Show internship title
+
+    res.json({ success: true, applications: apps });
+
+  } catch (err) {
+    console.error("Employer Fetch Error:", err);
+    res.status(500).json({ success: false });
+  }
+});
 
 module.exports = router;
