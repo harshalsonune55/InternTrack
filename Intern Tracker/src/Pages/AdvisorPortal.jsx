@@ -21,13 +21,33 @@ export default function AdvisorPortal() {
   ];
 
   const students = [
-    { name: "Ayesha Alzarooni", id: "U22123456", status: "placed", dept: "Computer Science", year: "4th Year", gpa: "3.70" },
-    { name: "Ayesha Alzarooni", id: "U22123456", status: "placed", dept: "Computer Science", year: "4th Year", gpa: "3.70" },
-    { name: "Ayesha Alzarooni", id: "U22123456", status: "placed", dept: "Computer Science", year: "4th Year", gpa: "3.70" },
-    { name: "Ayesha Alzarooni", id: "U22123456", status: "placed", dept: "Computer Science", year: "4th Year", gpa: "3.70" },
-    { name: "Mashaer Ahmed", id: "U22100100", status: "seeking", dept: "Computer Science", year: "4th Year", gpa: "3.60" },
-    { name: "Ayesha Jamal", id: "U22000123", status: "seeking", dept: "Business Administration", year: "3rd Year", gpa: "3.20" },
-    { name: "Meera Saeed", id: "U22000511", status: "interviewing", dept: "Engineering", year: "4th Year", gpa: "3.10" },
+    
+      { name: "Ayesha Alzarooni", id: "U22123456", status: "placed", dept: "Computer Science", year: "4th Year", gpa: "3.70" },
+      { name: "Fatima Al Ketbi", id: "U22111234", status: "placed", dept: "Information Security", year: "4th Year", gpa: "3.65" },
+      { name: "Maryam Al Kamali", id: "U22100987", status: "placed", dept: "Software Engineering", year: "4th Year", gpa: "3.72" },
+      { name: "Aaliyah Al Falasi", id: "U22104567", status: "placed", dept: "Computer Science", year: "4th Year", gpa: "3.68" },
+    
+      { name: "Mashaer Ahmed", id: "U22100100", status: "seeking", dept: "Computer Science", year: "4th Year", gpa: "3.60" },
+      { name: "Hessa Al Suwaidi", id: "U22099888", status: "seeking", dept: "Artificial Intelligence", year: "3rd Year", gpa: "3.40" },
+      { name: "Najla Al Mehairi", id: "U22099555", status: "seeking", dept: "Cybersecurity", year: "3rd Year", gpa: "3.30" },
+      { name: "Ayesha Jamal", id: "U22000123", status: "seeking", dept: "Business Administration", year: "3rd Year", gpa: "3.20" },
+    
+      { name: "Meera Saeed", id: "U22000511", status: "interviewing", dept: "Engineering", year: "4th Year", gpa: "3.10" },
+      { name: "Hind Al Kaabi", id: "U22123490", status: "interviewing", dept: "Information Systems", year: "4th Year", gpa: "3.25" },
+      { name: "Reem Al Ali", id: "U22111122", status: "interviewing", dept: "Finance", year: "3rd Year", gpa: "3.15" },
+      { name: "Sara Al Shehhi", id: "U22077895", status: "interviewing", dept: "Marketing", year: "3rd Year", gpa: "3.22" },
+    
+      { name: "Abdulla Al Marri", id: "U22055001", status: "placed", dept: "Computer Engineering", year: "4th Year", gpa: "3.50" },
+      { name: "Rashed Al Mansoori", id: "U22066331", status: "seeking", dept: "Mechanical Engineering", year: "3rd Year", gpa: "3.00" },
+      { name: "Saeed Al Hammadi", id: "U22088990", status: "interviewing", dept: "Electrical Engineering", year: "4th Year", gpa: "3.18" },
+      { name: "Khalifa Al Nuaimi", id: "U22012345", status: "placed", dept: "Business Management", year: "4th Year", gpa: "3.48" },
+    
+      { name: "Mansoor Al Shamsi", id: "U22156781", status: "seeking", dept: "Civil Engineering", year: "3rd Year", gpa: "2.95" },
+      { name: "Omar Al Zaabi", id: "U22100990", status: "interviewing", dept: "Computer Science", year: "4th Year", gpa: "3.12" },
+      { name: "Latifa Al Daheri", id: "U22133445", status: "placed", dept: "Software Engineering", year: "4th Year", gpa: "3.78" },
+      { name: "Noora Al Mazrouei", id: "U22155667", status: "seeking", dept: "Accounting", year: "3rd Year", gpa: "3.05" }
+    
+    
   ];
 
   const [searchQuery, setSearchQuery] = useState("");

@@ -24,7 +24,8 @@ export default function EmployerDashboard() {
   }, []);
 
   // 👉 Accept Internship
-  const handleAccept = async (id) => {
+ // 👉 Accept Internship
+const handleAccept = async (id) => {
     await fetch(
       "https://interntrack-server-sptb.onrender.com/employer/applications/approve",
       {
@@ -36,10 +37,11 @@ export default function EmployerDashboard() {
         }),
       }
     );
-
-    loadApplications(); // refresh UI
+  
+    // ❌ Do NOT reload all — instead remove the item immediately
+    setApplications((prev) => prev.filter((a) => a._id !== id));
   };
-
+  
   // 👉 Reject Internship
   const handleReject = async (id) => {
     await fetch(
@@ -53,9 +55,11 @@ export default function EmployerDashboard() {
         }),
       }
     );
-
-    loadApplications(); // refresh UI
+  
+    // ❌ Remove item from list immediately
+    setApplications((prev) => prev.filter((a) => a._id !== id));
   };
+  
 
   return (
     <div className="flex bg-gray-50">
