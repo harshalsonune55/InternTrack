@@ -29,71 +29,134 @@ export default function Companies() {
 
   const companies = [
     {
-      name: "ADNOC",
-      contact: "Mohammed Al Dhaheri",
+      _id: "cmp1",
+      internshipId: "int1",
+      name: "du Telecom",
+      contact: "Hamad Al Mansoori",
+      status: "active",
+      industry: "Telecommunications",
+      size: "5000+ employees",
+      email: "careers@du.ae",
+      phone: "+971504567890",
+      address: "du HQ, Dubai Media City, Dubai",
+      positions: 4,
+      about: "du is one of the leading telecom operators in the UAE, providing mobile, broadband and enterprise services.",
+      website: "https://www.du.ae"
+    },
+  
+    {
+      _id: "cmp2",
+      internshipId: "int2",
+      name: "ENOC",
+      contact: "Mohammed Al Qassimi",
       status: "active",
       industry: "Energy",
-      size: "1000+ employees",
-      email: "mohammed@adnoc.ae",
-      phone: "+971502345678",
-      address: "Abu Dhabi National Oil Company, Abu Dhabi",
-      positions: 5,
-      about: "Abu Dhabi National Oil Company – leading energy company in the UAE",
-      website: "#",
+      size: "9000+ employees",
+      email: "careers@enoc.com",
+      phone: "+971503445667",
+      address: "ENOC Complex, Dubai",
+      positions: 6,
+      about: "ENOC Group is a global energy player operating across the oil and gas value chain.",
+      website: "https://www.enoc.com"
     },
+  
     {
-        name: "ADNOC",
-        contact: "Mohammed Al Dhaheri",
-        status: "active",
-        industry: "Energy",
-        size: "1000+ employees",
-        email: "mohammed@adnoc.ae",
-        phone: "+971502345678",
-        address: "Abu Dhabi National Oil Company, Abu Dhabi",
-        positions: 5,
-        about: "Abu Dhabi National Oil Company – leading energy company in the UAE",
-        website: "#",
-      },
-      {
-        name: "ADNOC",
-        contact: "Mohammed Al Dhaheri",
-        status: "active",
-        industry: "Energy",
-        size: "1000+ employees",
-        email: "mohammed@adnoc.ae",
-        phone: "+971502345678",
-        address: "Abu Dhabi National Oil Company, Abu Dhabi",
-        positions: 5,
-        about: "Abu Dhabi National Oil Company – leading energy company in the UAE",
-        website: "#",
-      },
-    {
-      name: "Etisalat",
-      contact: "Fatima Al Shamsi",
+      _id: "cmp3",
+      internshipId: "int3",
+      name: "EY (Ernst & Young)",
+      contact: "Sarah Al Marri",
       status: "active",
-      industry: "Technology",
-      size: "1000+ employees",
-      email: "fatima@etisalat.ae",
-      phone: "+971503456789",
-      address: "Emirates Telecommunications Group Company",
-      positions: 4,
-      about: "Leading telecommunications company in the Middle East",
-      website: "#",
+      industry: "Consulting",
+      size: "300,000+ employees worldwide",
+      email: "recruitment@ae.ey.com",
+      phone: "+971504567321",
+      address: "EY MENA HQ, Dubai International Financial Centre",
+      positions: 8,
+      about: "EY is a global leader in assurance, consulting, strategy, and tax services.",
+      website: "https://www.ey.com"
     },
+  
     {
-      name: "SEWA",
-      contact: "Ahmed Al Mansoori",
+      _id: "cmp4",
+      internshipId: "int4",
+      name: "Al-Futtaim Group",
+      contact: "Fatima Al Shehhi",
+      status: "active",
+      industry: "Business Group",
+      size: "35,000+ employees",
+      email: "careers@alfuttaim.com",
+      phone: "+971505556667",
+      address: "Dubai Festival City, Dubai",
+      positions: 10,
+      about: "Al-Futtaim is a large business group operating in automotive, retail, real estate, and finance sectors.",
+      website: "https://www.alfuttaim.com"
+    },
+  
+    {
+      _id: "cmp5",
+      internshipId: "int5",
+      name: "ADIB Bank",
+      contact: "Ahmed Al Hammadi",
+      status: "active",
+      industry: "Banking",
+      size: "2500+ employees",
+      email: "careers@adib.com",
+      phone: "+971507778899",
+      address: "ADIB HQ, Abu Dhabi",
+      positions: 7,
+      about: "ADIB is a leading Islamic bank offering Shariah-compliant financial solutions in the UAE.",
+      website: "https://www.adib.ae"
+    },
+  
+    {
+      _id: "cmp6",
+      internshipId: "int6",
+      name: "Sharjah Municipality",
+      contact: "Latifa Al Suwaidi",
       status: "active",
       industry: "Government",
-      size: "1000+ employees",
-      email: "ahmed@sewa.gov.ae",
-      phone: "+971501234567",
-      address: "Sharjah Electricity, Water and Gas Authority",
-      positions: 3,
-      about: "Provides essential energy services in Sharjah",
-      website: "#",
+      size: "6000+ employees",
+      email: "info@shjmun.gov.ae",
+      phone: "+97165330000",
+      address: "Sharjah Municipality Building, Sharjah",
+      positions: 5,
+      about: "Sharjah Municipality oversees public services, infrastructure, and urban planning in the emirate.",
+      website: "https://www.shjmun.gov.ae"
     },
+  
+    {
+      _id: "cmp7",
+      internshipId: "int7",
+      name: "Sajaya Young Ladies of Sharjah",
+      contact: "Maryam Al Zarouni",
+      status: "active",
+      industry: "Youth Development",
+      size: "200+ employees",
+      email: "info@sajaya.ae",
+      phone: "+97165064466",
+      address: "Sajaya HQ, Sharjah",
+      positions: 3,
+      about: "Sajaya is dedicated to empowering young Emirati women through leadership and skill-building programs.",
+      website: "https://www.sajaya.ae"
+    },
+  
+    {
+      _id: "cmp8",
+      internshipId: "int8",
+      name: "Sharjah Islamic Bank (SIB)",
+      contact: "Omar Al Breiki",
+      status: "active",
+      industry: "Banking",
+      size: "3000+ employees",
+      email: "careers@sib.ae",
+      phone: "+97165160000",
+      address: "Sharjah Islamic Bank HQ, Sharjah",
+      positions: 6,
+      about: "SIB is a Shariah-compliant bank offering modern banking solutions across the UAE.",
+      website: "https://www.sib.ae"
+    }
   ];
+  
   const navigate = useNavigate();
 
 
@@ -177,11 +240,19 @@ export default function Companies() {
                 <p className="text-sm text-gray-600">{c.about}</p>
 
                 <button
-                    className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 mt-auto"
-                    onClick={() => navigate("/apply", { state: { company: c } })}
-                >
-                 Apply to Company
-                </button>
+  className="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 mt-auto"
+  onClick={() =>
+    navigate("/apply", {
+      state: {
+        company: c,
+        internshipId: c.internshipId,  // ⭐⭐ THIS IS THE FIX ⭐⭐
+      },
+    })
+  }
+>
+  Apply to Company
+</button>
+
 
               </div>
             ))

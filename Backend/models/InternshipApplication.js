@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const InternshipApplicationSchema = new mongoose.Schema({
   studentId: {
-    type: String,   // ← changed from ObjectId
+    type: String,   
     required: true,
   },
 

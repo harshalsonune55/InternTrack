@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
+
 import {
   ArrowLeft,
   Building2,
@@ -18,13 +19,59 @@ export default function Apply() {
   const { state } = useLocation();
   const company = state?.company;
   const navigate = useNavigate();
+  const internshipId = state?.internshipId;
+
+  const user = JSON.parse(localStorage.getItem("user")); // student info
+
+  const [fullName, setFullName] = useState(user?.name || "");
+  const [studentId, setStudentId] = useState(user?._id || "");
+  const [email, setEmail] = useState(user?.email || "");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
 
   const [showSuccess, setShowSuccess] = useState(false);
 
-  const handleSubmit = () => {
-    // You can add API call later
-    setShowSuccess(true);
+  const handleSubmit = async () => {
+    const internshipId = state?.internshipId;
+  
+    if (!internshipId) {
+      alert("Internship ID missing");
+      return;
+    }
+  
+    const payload = {
+      studentId: user._id,
+      internshipId: internshipId,
+companyId: company._id,
+      advisorId: user.assignedAdvisor || null,
+      studentMessage: message,
+    };
+  
+    console.log("Payload being sent:", payload);
+  
+    try {
+      const res = await fetch("https://interntrack-server-sptb.onrender.com/internships/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+  
+      const data = await res.json();
+      console.log("Backend Response:", data);
+  
+      if (data.success) {
+        setShowSuccess(true);
+      } else {
+        alert(data.message || "Error submitting application");
+      }
+  
+    } catch (err) {
+      console.error(err);
+      alert("Server error");
+    }
   };
+  
+  
 
   return (
     <div className="flex bg-gray-50 min-h-screen">
@@ -87,13 +134,34 @@ export default function Apply() {
           <h2 className="text-xl font-semibold mb-4">Application Details</h2>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <input placeholder="Full Name" className="border p-3 rounded-lg" />
-            <input placeholder="Student ID" className="border p-3 rounded-lg" />
-            <input placeholder="Email Address" className="border p-3 rounded-lg" />
-            <input placeholder="Phone Number" className="border p-3 rounded-lg" />
+            <input
+              value={fullName}
+              onChange={(e) => setFullName(e.target.value)}
+              placeholder="Full Name"
+              className="border p-3 rounded-lg"
+            />
+            <input
+              value={studentId}
+              placeholder="Student ID"
+              className="border p-3 rounded-lg"
+              readOnly
+            />
+            <input
+              value={email}
+              placeholder="Email Address"
+              className="border p-3 rounded-lg"
+              readOnly
+            />
+            <input
+              onChange={(e) => setPhone(e.target.value)}
+              placeholder="Phone Number"
+              className="border p-3 rounded-lg"
+            />
           </div>
 
           <textarea
+            value={message}
+            onChange={(e) => setMessage(e.target.value)}
             placeholder="Write a short message / cover note for this application..."
             className="border p-3 rounded-lg w-full mt-6 h-32"
           />
