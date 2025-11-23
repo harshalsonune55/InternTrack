@@ -24,7 +24,7 @@ export default function EmployerPortal() {
       <Sidebar />
 
       <main className="flex-1 ml-64 p-8 min-h-screen">
-        <h1 className="text-3xl font-bold">Employer Dashboard</h1>
+        <h1 className="text-3xl font-bold">Post Internship</h1>
         <p className="text-gray-600 mb-8">Welcome – Manage your internship postings</p>
 
         {/* STATS */}

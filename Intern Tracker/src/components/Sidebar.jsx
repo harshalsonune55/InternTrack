@@ -35,8 +35,8 @@ export default function Sidebar() {
   // ⭐ EMPLOYER MENU
   const employerNav = [
     { label: "Employer Dashboard", icon: <LayoutDashboard size={18} />, path: "/employer-dashboard" },
-    { label: "Employer Portal", icon: <Building2 size={18} />, path: "/employer" },
-    // { label: "Advisor Portal", icon: <GraduationCap size={18} />, path: "/advisor" },
+    { label: "Internships", icon: <Building2 size={18} />, path: "/employer" },
+    // { label: "Advisor Poral", icon: <GraduationCap size={18} />, path: "/advisor" },
     // { label: "Internships", icon: <Briefcase size={18} />, path: "/internships" },
     { label: "My Profile", icon: <FileText size={18} />, path: "/profile" },
     { label: "Notifications", icon: <Bell size={18} />, path: "/notifications" },
