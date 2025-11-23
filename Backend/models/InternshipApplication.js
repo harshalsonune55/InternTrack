@@ -2,26 +2,22 @@ const mongoose = require("mongoose");
 
 const InternshipApplicationSchema = new mongoose.Schema({
   studentId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,   // ← changed from ObjectId
     required: true,
   },
 
   internshipId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Internship",
+    type: String,   
     required: true,
   },
 
   companyId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "Company",
+    type: String,   // ← changed from ObjectId
     required: true,
   },
 
   advisorId: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User", // advisor user
+    type: String,   // ← changed from ObjectId
   },
 
   status: {
