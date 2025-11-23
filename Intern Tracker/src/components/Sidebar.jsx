@@ -34,10 +34,10 @@ export default function Sidebar() {
 
   // ⭐ EMPLOYER MENU
   const employerNav = [
-    { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/dashboard" },
+    { label: "Employer Dashboard", icon: <LayoutDashboard size={18} />, path: "/employer-dashboard" },
     { label: "Employer Portal", icon: <Building2 size={18} />, path: "/employer" },
-    { label: "Advisor Portal", icon: <GraduationCap size={18} />, path: "/advisor" },
-    { label: "Internships", icon: <Briefcase size={18} />, path: "/internships" },
+    // { label: "Advisor Portal", icon: <GraduationCap size={18} />, path: "/advisor" },
+    // { label: "Internships", icon: <Briefcase size={18} />, path: "/internships" },
     { label: "My Profile", icon: <FileText size={18} />, path: "/profile" },
     { label: "Notifications", icon: <Bell size={18} />, path: "/notifications" },
   ];
@@ -47,7 +47,7 @@ export default function Sidebar() {
     { label: "Dashboard", icon: <LayoutDashboard size={18} />, path: "/dashboard" },
     { label: "Advisor Portal", icon: <GraduationCap size={18} />, path: "/advisor" },
     { label: "All Students", icon: <Users size={18} />, path: "/students" },
-    { label: "Internship Applications", icon: <Briefcase size={18} />, path: "/advisor/internships" },
+    // { label: "Internship Applications", icon: <Briefcase size={18} />, path: "/advisor/internships" },
     { label: "Notifications", icon: <Bell size={18} />, path: "/notifications" },
   ];
 

@@ -14,6 +14,7 @@ import PdfViewer from "./Pages/PDFViewer";
 import Apply from "./Pages/Apply";
 import ProfileSelector from "./components/ProfileSelector";
 import Upload from "./Pages/Upload";
+import EmployerDashboard from "./Pages/EmployerDashboard";
 
 
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -76,10 +77,17 @@ function App() {
     </ProtectedRoute> 
   }
 />
+<Route path="/employer-dashboard" element={
+  <ProtectedRoute>
+    <EmployerDashboard />
+  </ProtectedRoute>
+} />
+
                         <Route path="/advisor" element={
           <ProtectedRoute><AdvisorPortal /></ProtectedRoute>
         }/>
       </Routes>
+
     </Router>
   );
 }

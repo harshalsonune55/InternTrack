@@ -47,6 +47,8 @@ app.use("/api/employer", employerRoutes);
 app.use("/api/student", studentRoutes);
 app.use("/advisor", advisorRoutes);
 app.use("/internships", internshipRoutes);
+app.use("/employer", require("./routes/employer"));
+
 
 // START SERVER
 app.listen(process.env.PORT, () =>

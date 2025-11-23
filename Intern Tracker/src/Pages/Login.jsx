@@ -27,9 +27,16 @@ export default function Login() {
 
       if (data.success) {
         localStorage.setItem("user", JSON.stringify(data.user));
-        navigate("/dashboard");
-      } else {
-        alert(data.message || "Invalid Credentials");
+      
+        if (data.user.userType === "student") {
+          navigate("/dashboard"); // student dashboard
+        } 
+        else if (data.user.userType === "employer") {
+          navigate("/employer-dashboard"); // employer dashboard
+        } 
+        else if (data.user.userType === "advisor") {
+          navigate("/dashboard"); // advisor dashboard
+        }
       }
     } catch (error) {
       console.error(error);

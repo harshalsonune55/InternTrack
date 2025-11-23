@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const EmployerProfile = require("../models/EmployerProfile");
+const InternshipApplication = require("../models/InternshipApplication");
 
 router.post("/save", async (req, res) => {
   try {
@@ -25,5 +26,32 @@ router.get("/:employerId", async (req, res) => {
       res.status(500).json({ success: false, message: "Error fetching profile" });
     }
   });
+
+  router.post("/applications/approve", async (req, res) => {
+    const { applicationId } = req.body;
+  
+    const updated = await InternshipApplication.findByIdAndUpdate(
+      applicationId,
+      { status: "approved" },
+      { new: true }
+    );
+  
+    res.json({ success: true, application: updated });
+  });
+  
+  // REJECT
+  router.post("/applications/reject", async (req, res) => {
+    const { applicationId } = req.body;
+  
+    const updated = await InternshipApplication.findByIdAndUpdate(
+      applicationId,
+      { status: "rejected" },
+      { new: true }
+    );
+  
+    res.json({ success: true, application: updated });
+  });
+
+
 
 module.exports = router;

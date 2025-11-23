@@ -55,6 +55,22 @@ router.get("/student/:studentId", async (req, res) => {
       res.status(500).json({ success: false, message: "Server error" });
     }
   });
+
+  // 👉 FETCH ALL APPLICATIONS FOR EMPLOYER
+router.get("/employer/:employerId", async (req, res) => {
+    try {
+      const apps = await InternshipApplication.find()
+        .populate("studentId")
+        .populate("internshipId")
+        .populate("companyId");
+  
+      res.json({ success: true, applications: apps });
+    } catch (err) {
+      console.error("Employer Fetch Error:", err);
+      res.status(500).json({ success: false });
+    }
+  });
+  
   
 
 module.exports = router;
