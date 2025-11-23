@@ -39,5 +39,22 @@ router.post("/apply", async (req, res) => {
     });
   }
 });
+router.get("/student/:studentId", async (req, res) => {
+    try {
+      const studentId = req.params.studentId;
+  
+      const apps = await InternshipApplication.find({ studentId });
+  
+      res.json({
+        success: true,
+        applications: apps,
+      });
+  
+    } catch (err) {
+      console.error("Fetch Applications Error:", err);
+      res.status(500).json({ success: false, message: "Server error" });
+    }
+  });
+  
 
 module.exports = router;
